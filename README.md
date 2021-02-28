@@ -1,2 +1,2 @@
-# e-commerce_api
+# api e-commerce
  Api para la gestion de un e-commerce

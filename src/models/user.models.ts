@@ -1,31 +1,49 @@
 import {Schema, model} from 'mongoose';
 
+const roles = {
+  values: ['ADMIN','USER'],
+  message: '{VALUE} rol no valido'
+}
+
 const userSchema: Schema = new Schema({
     username: {
       type: String,
-      required: true,
+      required: [true,'El nombre de usuario es requerido.'],
       unique: true
+    },
+    password:{
+      type: String,
+      required: true
     },
     firstName: {
       type: String,
-      required: true
+      required: [true,'El nombre es obligatorio']
     },
     lastName: {
       type: String,
-      required: true
+      required: false,
     },
     email: {
       type: String,
       unique: true,
-      required: false
+      required: [true,'El email es obligatorio'],
     },
     aditionalEmail: {
       type: [String],
       default: []
+    },
+    role:{
+      type: String,
+      default:'USER',
+      enum: roles,
+    },
+    isActive:{
+      type: Boolean,
+      default: true,
     }
   }, {
     versionKey: false,
-    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
+    timestamps: true,
 });
 
 export default model('User',userSchema);

@@ -2,11 +2,18 @@ import { RequestHandler } from 'express';
 import Product from '../models/product.model';
 
 export const createProduct: RequestHandler = async (req,res)=>{
-    const product = new Product(req.body);
+    try {
+        const product = new Product(req.body);
   
-    const productSave = await product.save();
-    
-    res.json(productSave);
+        const productSave = await product.save();
+        
+        res.json(productSave);
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Ocurrio un error',
+            error
+        });
+    }
 };
 
 export const getProducts: RequestHandler = (req,res)=>{
